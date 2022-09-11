@@ -24,6 +24,9 @@ var setCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		checkDirectory()
 		checkName()
+		getCurrentBinary()
+
+		fmt.Println("")
 
 		directory, files := getBinaries()
 		prompt := promptui.Select{
@@ -66,9 +69,17 @@ var setCmd = &cobra.Command{
 		}
 
 		fmt.Printf("Version %q configured for vcn\n", result)
+		viper.Set("currentBinary", result)
+		viper.WriteConfig()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(setCmd)
+}
+
+func getCurrentBinary() {
+	if viper.GetString("currentBinary") != "" {
+		fmt.Printf("Current binary set: %s\n", viper.GetString("currentBinary"))
+	}
 }

@@ -18,12 +18,18 @@ var listCmd = &cobra.Command{
 	Short: "List binaries available on directory set",
 	Long:  `Display a list with the files on the directory set with the 'directory' command.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		checkDirectory()
+		checkName()
+
 		directory, files := getBinaries()
 		fmt.Printf("\nBinaries on %s:\n\n", directory)
 
 		for _, file := range files {
 			fmt.Println(file)
 		}
+
+		fmt.Println("")
+		getCurrentBinary()
 	},
 }
 

@@ -36,7 +36,7 @@ func init() {
 }
 
 func checkDirectory() {
-	currentDirectory := viper.GetString("directory")
+	currentDirectory := viper.GetString("currentDirectory")
 
 	if directory == "" {
 		if currentDirectory == "" {
@@ -46,7 +46,7 @@ func checkDirectory() {
 	}
 
 	if directory != "" {
-		viper.Set("directory", directory)
+		viper.Set("currentDirectory", directory)
 		viper.WriteConfig()
 		fmt.Printf("Directory set at %s\n", directory)
 	} else {
@@ -55,7 +55,7 @@ func checkDirectory() {
 }
 
 func checkName() {
-	currentName := viper.GetString("name")
+	currentName := viper.GetString("currentName")
 
 	if name == "" {
 		if currentName == "" {
@@ -65,11 +65,10 @@ func checkName() {
 	}
 
 	if name != "" {
-		viper.Set("name", name)
+		viper.Set("currentName", name)
 		viper.WriteConfig()
 		fmt.Printf("Name set as %s\n", name)
 	} else {
 		fmt.Println("Current name for binaries:", currentName)
-		fmt.Println("")
 	}
 }
