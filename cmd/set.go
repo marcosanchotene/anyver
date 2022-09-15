@@ -22,9 +22,8 @@ var setCmd = &cobra.Command{
 	Long: `Display a list with the available binaries and let
 	you select which one should be configured for global usage.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		checkDirectory()
-		checkName()
-		getCurrentBinary()
+		checkTools()
+		displayCurrentConfiguration()
 
 		fmt.Println("")
 
@@ -49,7 +48,7 @@ var setCmd = &cobra.Command{
 
 		homeDirectory := user.HomeDir
 
-		linkPath := homeDirectory + "/.local/bin/" + viper.GetString("name")
+		linkPath := homeDirectory + "/.local/bin/" + viper.GetString("current-tool")
 
 		if _, err := os.Lstat(linkPath); err == nil {
 			if err := os.Remove(linkPath); err != nil {
@@ -69,17 +68,13 @@ var setCmd = &cobra.Command{
 		}
 
 		fmt.Printf("Version %q configured for vcn\n", result)
-		viper.Set("currentBinary", result)
+		viper.Set("current-binary", result)
 		viper.WriteConfig()
+
+		displayCurrentConfiguration()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(setCmd)
-}
-
-func getCurrentBinary() {
-	if viper.GetString("currentBinary") != "" {
-		fmt.Printf("Current binary set: %s\n", viper.GetString("currentBinary"))
-	}
 }
