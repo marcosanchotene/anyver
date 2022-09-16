@@ -49,6 +49,7 @@ func initConfig() {
 		viper.AddConfigPath(home)
 		viper.SetConfigType("yaml")
 		viper.SetConfigName(".anyver")
+		viper.SafeWriteConfig()
 	}
 
 	viper.AutomaticEnv()

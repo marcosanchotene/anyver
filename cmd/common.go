@@ -1,0 +1,66 @@
+/*
+Copyright © 2022 Marco Sanchotene <marco.sanchotene@outlook.com>
+
+*/
+package cmd
+
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+
+	"github.com/spf13/viper"
+)
+
+var name string
+
+func displayCurrentConfiguration() {
+	displayCurrentTool()
+	displayCurrentDirectory()
+	displayCurrentBinary()
+}
+
+func displayCurrentTool() {
+	if viper.GetString("current-tool") != "" {
+		fmt.Printf("Current tool: %s\n", viper.GetString("current-tool"))
+	}
+}
+
+func displayCurrentDirectory() {
+	if viper.GetString("current-directory") != "" {
+		fmt.Printf("Current directory: %s\n", viper.GetString("current-directory"))
+	}
+}
+
+func displayCurrentBinary() {
+	if viper.GetString("current-binary") == "" {
+		fmt.Println("Current binary: None. Please set it with the 'set' command.")
+	} else {
+		fmt.Printf("Current binary: %s\n", viper.GetString("current-binary"))
+	}
+}
+
+func checkTools() {
+	tools := viper.GetStringMapString("tools")
+
+	if len(tools) == 0 {
+		fmt.Println("You have not added any tool. Please add with the 'add' command before continuing.")
+		os.Exit(1)
+	}
+}
+
+func getBinaries() (string, []string) {
+	currentTool := viper.GetString("current-tool")
+	tools := viper.GetStringMapString("tools")
+	directory := tools[currentTool]
+	files, err := ioutil.ReadDir(directory)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var fileNames []string
+	for _, file := range files {
+		fileNames = append(fileNames, file.Name())
+	}
+	return directory, fileNames
+}
