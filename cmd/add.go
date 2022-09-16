@@ -30,6 +30,7 @@ var addCmd = &cobra.Command{
 			tools[args[0]] = directory
 			viper.Set("tools", tools)
 			viper.WriteConfig()
+			fmt.Printf("Tool %s has been added.\n", args[0])
 		}
 		displayCurrentConfiguration()
 	},
