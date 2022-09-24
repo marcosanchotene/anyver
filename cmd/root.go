@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 Marco Sanchotene <marco.sanchotene@outlook.com>
-
 */
 package cmd
 

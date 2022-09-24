@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 Marco Sanchotene <marco.sanchotene@outlook.com>
-
 */
 package cmd
 
@@ -67,7 +66,9 @@ var setCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Printf("Version %q configured for vcn\n", result)
+		currentTool := viper.GetString("current-tool")
+
+		fmt.Printf("Version %q configured for %s\n", result, currentTool)
 		viper.Set("current-binary", result)
 		viper.WriteConfig()
 

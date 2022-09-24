@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 Marco Sanchotene <marco.sanchotene@outlook.com>
-
 */
 package cmd
 
@@ -13,7 +12,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-var name string
+var (
+	name      string
+	directory string
+)
 
 func displayCurrentConfiguration() {
 	displayCurrentTool()
@@ -63,4 +65,18 @@ func getBinaries() (string, []string) {
 		fileNames = append(fileNames, file.Name())
 	}
 	return directory, fileNames
+}
+
+func getTools() map[string]string {
+	tools := viper.GetStringMapString("tools")
+	return tools
+}
+
+func getToolsNames() []string {
+	tools := getTools()
+	names := make([]string, 0, len(tools))
+	for key := range tools {
+		names = append(names, key)
+	}
+	return names
 }

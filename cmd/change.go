@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 Marco Sanchotene <marco.sanchotene@outlook.com>
-
 */
 package cmd
 
@@ -21,11 +20,8 @@ var changeCmd = &cobra.Command{
 		exitIfOnlyOneTool()
 		displayCurrentConfiguration()
 
-		tools := viper.GetStringMapString("tools")
-		names := make([]string, 0, len(tools))
-		for key := range tools {
-			names = append(names, key)
-		}
+		tools := getTools()
+		names := getToolsNames()
 
 		prompt := promptui.Select{
 			Label: "Select tool",
