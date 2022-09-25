@@ -18,6 +18,8 @@ var (
 )
 
 func displayCurrentConfiguration() {
+	fmt.Println("")
+	fmt.Println("Current configuration")
 	displayCurrentTool()
 	displayCurrentDirectory()
 	displayCurrentBinary()
@@ -25,13 +27,13 @@ func displayCurrentConfiguration() {
 
 func displayCurrentTool() {
 	if viper.GetString("current-tool") != "" {
-		fmt.Printf("Current tool: %s\n", viper.GetString("current-tool"))
+		fmt.Printf("Tool: %s\n", viper.GetString("current-tool"))
 	}
 }
 
 func displayCurrentDirectory() {
 	if viper.GetString("current-directory") != "" {
-		fmt.Printf("Current directory: %s\n", viper.GetString("current-directory"))
+		fmt.Printf("Directory: %s\n", viper.GetString("current-directory"))
 	}
 }
 
@@ -39,11 +41,11 @@ func displayCurrentBinary() {
 	if viper.GetString("current-binary") == "" {
 		fmt.Println("Current binary: None. Please set it with the 'set' command.")
 	} else {
-		fmt.Printf("Current binary: %s\n", viper.GetString("current-binary"))
+		fmt.Printf("Binary: %s\n", viper.GetString("current-binary"))
 	}
 }
 
-func checkTools() {
+func exitIfNoToolIsConfigured() {
 	tools := viper.GetStringMapString("tools")
 
 	if len(tools) == 0 {

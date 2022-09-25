@@ -17,8 +17,7 @@ var (
 		Long: `Display a list of files on directory currently configure or 
 		a list of tools configured (when the --tools flag is used).`,
 		Run: func(cmd *cobra.Command, args []string) {
-			checkTools()
-			displayCurrentConfiguration()
+			exitIfNoToolIsConfigured()
 
 			if listToolsFlag {
 				listTools()
@@ -28,6 +27,8 @@ var (
 			}
 
 			fmt.Println("")
+
+			displayCurrentConfiguration()
 		},
 	}
 )
@@ -48,7 +49,7 @@ func listBinaries() {
 
 func listTools() {
 	names := getToolsNames()
-	fmt.Printf("\nTools currently configured:\n\n")
+	fmt.Printf("\nTools available:\n\n")
 
 	for _, name := range names {
 		fmt.Println(name)
